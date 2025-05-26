@@ -18,51 +18,13 @@ namespace QL_BLOG.Controllers
         // Trang chủ
         public IActionResult Index()
         {
-            var topUsers = _context.Posts
-                .GroupBy(p => p.Id_User)
-                .Select(g => new 
-                {
-                    UserId = g.Key,
-                    PostCount = g.Count()
-                })
-                .OrderByDescending(x => x.PostCount)
-                .Take(5)
-                .Join(_context.Accounts,
-                      g => g.UserId,
-                      u => u.Id_User,
-                      (g, u) => new TopUserViewModel
-                      {
-                          Username = u.Username,
-                          PostCount = g.PostCount,
-                          Create_At = u.Create_At
-                      })
-                .ToList();
-
-            ViewBag.TopUsers = topUsers;
-
-            // Lấy 1 bài viết ngẫu nhiên cùng Username
-            var randomPost = _context.Posts
-                .OrderBy(r => Guid.NewGuid())
-                .Join(_context.Accounts,
-                      p => p.Id_User,
-                      a => a.Id_User,
-                      (p, a) => new PostViewModel
-                      {
-                          Id_Post = p.Id_Post,
-                          Topic = p.Topic,
-                          Content = p.Content,
-                          Create_At = p.Create_At,
-                          Username = a.Username,
-                          Image_Posted = p.Image_Posted // Thêm dòng này
-                      })
-                .FirstOrDefault();
-
-            ViewBag.RandomPosts = randomPost;
+            // Set up sidebar data
+            SetupSidebarData();
 
             // Lấy danh sách bài viết, bao gồm thông tin người dùng
             var posts = _context.Posts
                 .Include(p => p.Category)
-                .Include(p => p.Account) // nếu cần hiển thị tên người đăng
+                .Include(p => p.Account) 
                 .OrderByDescending(p => p.Create_At)
                 .ToList();
 
@@ -164,7 +126,7 @@ namespace QL_BLOG.Controllers
                           Content = p.Content,
                           Create_At = p.Create_At,
                           Username = a.Username,
-                          Image_Posted = p.Image_Posted // Thêm dòng này
+                          Image_Posted = p.Image_Posted 
                       })
                 .FirstOrDefault();
 

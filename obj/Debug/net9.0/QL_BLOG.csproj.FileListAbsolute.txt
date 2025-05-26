@@ -224,3 +224,4 @@ D:\Workspace\Study\SelfStudy\Learn_ASP\Tieu_luan_2\QL_BLOG\bin\Debug\net9.0\tr\M
 D:\Workspace\Study\SelfStudy\Learn_ASP\Tieu_luan_2\QL_BLOG\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 D:\Workspace\Study\SelfStudy\Learn_ASP\Tieu_luan_2\QL_BLOG\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 D:\Workspace\Study\SelfStudy\Learn_ASP\Tieu_luan_2\QL_BLOG\obj\Debug\net9.0\compressed\y69f9ih1jd-qb5ggnot4f.gz
+D:\Workspace\Study\SelfStudy\Learn_ASP\Tieu_luan_2\QL_BLOG\obj\Debug\net9.0\QL_BLOG.sourcelink.json
