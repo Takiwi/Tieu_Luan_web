@@ -1,0 +1,45 @@
+@model QL_BLOG.Models.PostViewModel
+@using QL_BLOG.Data
+
+@{
+    ViewData["Title"] = "Đăng bài viết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Đăng bài viết</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="topic" class="form-label">Chủ đề</label>
+        <input type="text" class="form-control" id="topic" name="Topic" required />
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Content" class="form-label">Nội dung</label>
+        <textarea asp-for="Content" 
+                  class="form-control" 
+                  rows="10" 
+                  style="min-height: 200px;"
+                  placeholder="Nhập nội dung bài viết..."></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Hình ảnh</label>
+        <input type="file" class="form-control" id="image" name="Image" />
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Danh mục</label>
+        <select class="form-select" id="category" name="Id_Category" required>
+            <option value="">Chọn danh mục</option>
+            @foreach(var category in (IEnumerable<QL_BLOG.Data.Category>)ViewBag.Categories)
+            {
+                <option value="@category.Id_Category">@category.Name_Category</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Đăng bài</button>
+</form>

@@ -1,0 +1,80 @@
+@{
+    ViewData["Title"] = "Trang cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userPosts = ViewBag.UserPosts as List<QL_BLOG.Data.Post>;
+    var userId = ViewBag.UserId as int?;
+    var user = ViewBag.UserInfo as QL_BLOG.Data.Account;
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Trang cá nhân</h1>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4 class="mb-0">Thông tin cá nhân</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Tên đăng nhập:</strong> @user.Username</p>
+                    <p><strong>Email:</strong> @user.Email</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Giới tính:</strong> @user.Gender</p>
+                    <p><strong>Ngày sinh:</strong> @(user.Birthday?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")</p>
+                    <p><strong>Ngày tạo tài khoản:</strong> @user.Create_At.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+            <div class="text-end">
+                <a asp-controller="Account" asp-action="EditProfile" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Chỉnh sửa thông tin
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mt-4">Danh sách bài viết của bạn</h4>
+    <table class="table table-bordered table-striped mt-2">
+        <thead>
+            <tr>
+                <th>Tiêu đề</th>
+                <th>Ngày đăng</th>
+                <th>Thể loại</th>
+                <th>Lượt xem</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (userPosts != null && userPosts.Any())
+        {
+            foreach (var post in userPosts)
+            {
+                <tr>
+                    <td>@post.Topic</td>
+                    <td>@post.Create_At.ToString("dd/MM/yyyy")</td>
+                    <td>@(post.Category != null ? post.Category.Name_Category : "Không xác định")</td>
+                    <td>@post.View_Number</td>
+                    <td>@(post.States == 1 ? "Hiển thị" : "Ẩn")</td>
+                    <td>
+                        <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.Id_Post" class="btn btn-sm btn-primary">Chỉnh sửa</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">Bạn chưa có bài viết nào.</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

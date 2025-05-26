@@ -1,0 +1,40 @@
+@model QL_BLOG.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Đăng ký";
+    Layout = "_Login";
+}
+
+<div class="container">
+    <h2 class="text-center">Đăng ký tài khoản</h2>
+    <form asp-action="Register" method="post">
+        <div class="form-group mb-3">
+            <label for="Username" class="mb-1">Tên đăng nhập</label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label for="Password" class="mb-1">Mật khẩu</label>
+            <input asp-for="Password" class="form-control" type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label for="ConfirmPassword" class="mb-1">Xác nhận mật khẩu</label>
+            <input asp-for="ConfirmPassword" class="form-control" type="password" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label for="Email" class="mb-1">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label for="gender" class="mb-1">Giới tính:</label>
+            <select id="gender" name="Gender" class="form-control" required>
+                <option value="M">Nam</option>
+                <option value="F">Nữ</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+    </form>
+</div>

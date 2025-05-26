@@ -1,0 +1,39 @@
+@model IEnumerable<QL_BLOG.Data.Post>
+
+<div class="container mt-4">
+    <h2>Quản lý bài viết</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tiêu đề</th>
+                <th>Tác giả</th>
+                <th>Thể loại</th>
+                <th>Ngày đăng</th>
+                <th>Lượt xem</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in Model)
+            {
+                <tr>
+                    <td>@post.Topic</td>
+                    <td>@post.Account.Username</td>
+                    <td>@post.Category.Name_Category</td>
+                    <td>@post.Create_At.ToString("dd/MM/yyyy")</td>
+                    <td>@post.View_Number</td>
+                    <td>
+                        <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.Id_Post" 
+                           class="btn btn-sm btn-primary">Sửa</a>
+                        <form asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id_Post" 
+                              method="post" style="display: inline;"
+                              onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này?');">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

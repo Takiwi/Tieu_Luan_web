@@ -1,0 +1,41 @@
+@model dynamic
+
+@{
+    ViewData["Title"] = "Chi tiết bài viết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentUserId = Context.Session.GetInt32("UserId");
+    var isAdmin = Context.Session.GetString("IsAdmin") == "true";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-break">@Model.Topic</h2>
+    <p class="text-muted text-center">Đăng bởi: @Model.Account.Username vào ngày @Model.Create_At.ToString("dd/MM/yyyy")</p>
+    @if (!string.IsNullOrEmpty(Model.Image_Posted))
+    {
+        <div class="text-center">
+            <img src="~/images/@Model.Image_Posted" 
+                 class="img-fluid rounded" 
+                 alt="Ảnh bài viết" 
+                 asp-append-version="true"/>
+        </div>
+    }
+    <div class="mt-4 text-break">
+        @* Thay thế <p> bằng white-space: pre-wrap *@
+        <div style="white-space: pre-wrap; font-size: 20px;" class="mb-5">@Model.Content</div>
+    </div>
+
+    @if (currentUserId == Model.Account?.Id_User || isAdmin)
+    {
+        <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id_Post" class="btn btn-warning">Chỉnh sửa</a>
+    }
+
+    @if (isAdmin)
+    {
+        <form asp-controller="Post" asp-action="DeletePost" asp-route-id="@Model.Id_Post" 
+              method="post" style="display: inline;"
+              onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?');">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger">Xóa</button>
+        </form>
+    }
+</div>

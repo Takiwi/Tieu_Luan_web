@@ -1,0 +1,134 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QL_BLOG</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/af806c1e70.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <div class="text-center me-3 rounded-circle overflow-hidden" style="width: 50px; height: 50px;">
+                    <img src="~/images/logo.jpg" alt="Logo" class="img-fluid" style="max-width: 100px;"/>
+                </div>
+                <h3 class="text-center my-3 fw-bold">Quản lý Blog</h3>
+            </div>
+            <div class="d-flex align-items-center">
+                @if (HttpContextAccessor.HttpContext?.Session?.GetInt32("UserId") != null)
+                {
+                    <div class="rounded-pill bg-dark text-center me-3 ">
+                        <a class="text-decoration-none px-3 py-2 d-block fw-bolder text-light" asp-controller="Post" asp-action="Create">Đăng bài</a>
+                    </div>
+                }
+            </div>
+        </header>
+            
+            <div class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/Home/Index">Quản lý Blog</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                    </li>
+                    @if (HttpContextAccessor.HttpContext?.Session?.GetString("IsAdmin") == "true")
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" 
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Quản lý
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ManagePosts">
+                                        Quản lý bài viết
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ManageUsers">
+                                        Quản lý người dùng
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                
+                @if (HttpContextAccessor.HttpContext?.Session?.GetInt32("UserId") != null)
+                {
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <span class="nav-link">Xin chào, @HttpContextAccessor.HttpContext?.Session?.GetString("Username")</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="Profile">Thông tin cá nhân</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+</div>
+
+        <main>
+            <div class="container">
+                @{
+                    var hasSidebar = IsSectionDefined("Sidebar");
+                }
+                <div class="row">
+                    <div class="@(hasSidebar ? "col-8" : "col-12")">
+                        @RenderBody()
+                    </div>
+                    @if (hasSidebar)
+                    {
+                        <div class="col-4">
+                            @RenderSection("Sidebar", required: false)
+                        </div>
+                    }
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="w-100 border-top mt-4 pt-3"></div>
+    <footer class="text-center mt-4"></footer>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex align-items-center">
+                        <div class="text-center me-3 rounded-circle overflow-hidden" style="width: 40px; height: 40px;">
+                            <img src="~/images/logo.jpg" alt="Logo" class="img-fluid" style="max-width: 100px;"/>
+                        </div>
+                        <h4 class="text-center my-3 fw-bold">Quản lý Blog</h4>
+                    </div>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel voluptatum id, fuga, esse quis magni laboriosam 
+                        ut, officia inventore possimus dicta velit veritatis ab vero corrupti ex! Quos, rerum nihil!
+                    </p>
+                </div>
+                <div class="col">
+                    <h4>Thông tin liên hệ</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: 123 Đường ABC, Quận XYZ, TP. Hồ Chí Minh</p>
+                    <p><i class="fas fa-phone"></i> Điện thoại: (012) 345-6789</p>
+                    <a href="#" class="me-2"><i class="fa-brands fa-square-facebook fs-2"></i></a>
+                    <a href="#" class="link-danger me-2"><i class="fa-brands fa-youtube fs-2"></i></a>
+                    <a href="#" class="link-danger me-2"><i class="fa-brands fa-pinterest fs-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="w-100 border-top mt-4 pt-3">
+        <p class="w-100 text-center">&copy; 2025 - QL_BLOG - Hoàng Đình Tân</p>
+    </div>
+</body>
+</html>

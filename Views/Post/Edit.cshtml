@@ -1,0 +1,48 @@
+@model QL_BLOG.Models.PostViewModel
+
+@{
+    ViewData["Title"] = "Chỉnh sửa bài viết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Chỉnh sửa bài viết</h2>
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id_Post" />
+        <div class="form-group mb-3">
+            <label for="Topic">Chủ đề</label>
+            <input asp-for="Topic" class="form-control" />
+            <span asp-validation-for="Topic" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Content" class="form-label">Nội dung</label>
+            <textarea asp-for="Content" 
+                      class="form-control" 
+                      rows="10" 
+                      style="min-height: 200px;"
+                      placeholder="Nhập nội dung bài viết..."></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.Image_Posted))
+        {
+            <div class="mb-3">
+                <label>Ảnh hiện tại:</label>
+                <img src="~/images/@Model.Image_Posted" 
+                     class="img-fluid rounded mb-2" 
+                     style="max-height: 200px;" 
+                     alt="Ảnh hiện tại"
+                     asp-append-version="true"/>
+            </div>
+        }
+        <div class="form-group mb-3">
+            <label for="Image">Thay đổi ảnh</label>
+            <input asp-for="Image" class="form-control" type="file" accept="image/*"/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="Id_Category">Danh mục</label>
+            <select asp-for="Id_Category" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "Id_Category", "Name_Category"))"></select>
+            <span asp-validation-for="Id_Category" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Lưu thay đổi</button>
+    </form>
+</div>
