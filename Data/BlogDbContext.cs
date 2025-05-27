@@ -27,9 +27,9 @@ namespace QL_BLOG.Data
             // Thiết lập mối quan hệ giữa Post và Category
             modelBuilder.Entity<Post>()
                 .HasOne(p => p.Category)
-                .WithMany(c => c.Posts)    
+                .WithMany()
                 .HasForeignKey(p => p.Id_Category)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);  // Thêm ràng buộc xóa
 
             // Thiết lập mối quan hệ giữa Comment và Post
             modelBuilder.Entity<Comment>()

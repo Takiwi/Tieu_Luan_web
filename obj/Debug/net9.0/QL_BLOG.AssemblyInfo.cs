@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QL_BLOG")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89dc1ca2ca7114059acaa28fc96ffbbb23aebc04")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6673e5ac7795c040243f6d9e5bdd69127a18ede9")]
 [assembly: System.Reflection.AssemblyProductAttribute("QL_BLOG")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QL_BLOG")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

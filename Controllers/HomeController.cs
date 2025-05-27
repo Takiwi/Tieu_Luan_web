@@ -69,6 +69,7 @@ namespace QL_BLOG.Controllers
         {
             try
             {
+                // First get the post
                 var post = _context.Posts
                     .Include(p => p.Account)
                     .Include(p => p.Category)
@@ -79,19 +80,37 @@ namespace QL_BLOG.Controllers
                     return NotFound();
                 }
 
-                // Tăng lượt xem trực tiếp bằng SQL để tránh vấn đề concurrency
-                _context.Database.ExecuteSqlRaw(
-                    "UPDATE Posts SET View_Number = View_Number + 1 WHERE Id_Post = {0}", id);
-
-                // Reload lại post để lấy số lượt xem mới nhất
-                _context.Entry(post).Reload();
+                // Update view count using direct SQL update
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Use parameterized SQL to prevent SQL injection
+                        var sql = "UPDATE Posts SET View_Number = COALESCE(View_Number, 0) + 1 WHERE Id_Post = @p0";
+                        _context.Database.ExecuteSqlRaw(sql, id);
+                        
+                        // Commit the transaction
+                        transaction.Commit();
+                        
+                        // Force refresh the post from database
+                        _context.Entry(post).State = EntityState.Detached;
+                        post = _context.Posts
+                            .Include(p => p.Account)
+                            .Include(p => p.Category)
+                            .FirstOrDefault(p => p.Id_Post == id);
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
 
                 SetupSidebarData();
                 return View(post);
             }
             catch (Exception ex)
             {
-                // Log error
                 Console.WriteLine($"Error updating view count: {ex.Message}");
                 return RedirectToAction("Index");
             }
