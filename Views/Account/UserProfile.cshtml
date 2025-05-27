@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "Trang cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userPosts = ViewBag.UserPosts as List<QL_BLOG.Data.Post>;
+    var user = ViewBag.UserInfo as QL_BLOG.Data.Account;
+}
+
+<div class="container mt-5">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4 class="mb-0">Thông tin người dùng</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Tên đăng nhập:</strong> @user.Username</p>
+                    <p><strong>Email:</strong> @user.Email</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Giới tính:</strong> @user.Gender</p>
+                    <p><strong>Ngày tham gia:</strong> @user.Create_At.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mb-4">Bài viết của @user.Username</h4>
+    @if (userPosts != null && userPosts.Any())
+    {
+        foreach (var post in userPosts)
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id_Post" 
+                           class="text-decoration-none">@post.Topic</a>
+                    </h5>
+                    <p class="card-text">@(post.Content.Length > 200 ? post.Content.Substring(0, 200) + "..." : post.Content)</p>
+                    <p class="text-muted">
+                        Thể loại: @post.Category.Name_Category<br />
+                        Đăng ngày: @post.Create_At.ToString("dd/MM/yyyy")
+                    </p>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-center">Người dùng chưa có bài viết nào.</p>
+    }
+</div>

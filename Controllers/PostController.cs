@@ -199,7 +199,7 @@ namespace QL_BLOG.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Kiểm tra quyền xóa
+            // Kiểm tra quyền xóa: chỉ admin hoặc chủ bài viết mới được xóa
             if (!isAdmin && post.Id_User != userId)
             {
                 TempData["Error"] = "Bạn không có quyền xóa bài viết này!";
@@ -222,24 +222,40 @@ namespace QL_BLOG.Controllers
                 _context.SaveChanges();
 
                 TempData["Message"] = "Xóa bài viết thành công!";
+                return RedirectToAction("Index", "Home");  // Chuyển hướng về trang chủ
             }
             catch (Exception ex)
             {
                 TempData["Error"] = "Có lỗi xảy ra khi xóa bài viết: " + ex.Message;
+                return RedirectToAction("Index", "Home");  // Chuyển hướng về trang chủ ngay cả khi có lỗi
+            }
+        }
+
+        // GET: /Post/Details/{id}
+        public IActionResult Details(int id)
+        {
+            var post = _context.Posts
+                .Include(p => p.Account)
+                .Include(p => p.Category)
+                .FirstOrDefault(p => p.Id_Post == id);
+
+            if (post == null)
+            {
+                return NotFound();
             }
 
-            return RedirectToAction("Index", "Home");
+            return View(post);
         }
 
-    private string EnsureUserImageDirectory(int userId)
-    {
-        var imagesRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-        var userFolder = Path.Combine(imagesRoot, $"user_{userId}");
-        if (!Directory.Exists(userFolder))
+        private string EnsureUserImageDirectory(int userId)
         {
-            Directory.CreateDirectory(userFolder);
+            var imagesRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+            var userFolder = Path.Combine(imagesRoot, $"user_{userId}");
+            if (!Directory.Exists(userFolder))
+            {
+                Directory.CreateDirectory(userFolder);
+            }
+            return userFolder;
         }
-        return userFolder;
     }
-}
 }

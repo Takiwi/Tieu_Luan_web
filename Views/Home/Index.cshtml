@@ -42,7 +42,7 @@
                         <div class="card mb-5 rounded shadow-sm">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@post.Id_Post">
+                                    <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id_Post">
                                         @if (!string.IsNullOrEmpty(post.Image_Posted))
                                         {
                                             <img src="~/images/@post.Image_Posted"
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <a asp-controller="Home" asp-action="Details" asp-route-id="@post.Id_Post" 
+                                        <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id_Post" 
                                            class="text-decoration-none text-dark d-block">
                                             <h5 class="card-title truncate-2-lines" style="cursor: pointer;">@post.Topic</h5>
                                         
@@ -96,61 +96,30 @@
 </div>
 
 @section Sidebar {
-    <div class="card mt-5">
-        <div class="border-0">
-            <form asp-controller="Home" asp-action="Search" method="get">
-                <div class="input-group">
-                    <input type="text" 
-                           class="form-control" 
-                           name="searchTerm" 
-                           id="searchInput"
-                           placeholder="Tìm kiếm bài viết..."
-                           value="@ViewBag.CurrentSearch"
-                           list="searchSuggestions"
-                           autocomplete="off">
-                    <datalist id="searchSuggestions">
-                        @foreach (var category in ViewBag.Categories ?? new List<string>())
-                        {
-                            <option value="@category"/>
-                        }
-                    </datalist>
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    @if (ViewBag.SearchPerformed != null && ViewBag.NoResults == true)
-    {
-        <div class="alert alert-info mt-3">
-            Không tìm thấy bài viết nào cho từ khóa "@ViewBag.CurrentSearch"
-        </div>
-    }
-
     <div class="container p-3 rounded mt-3">
         <h4 class="text-center">Những cây viết nổi bật</h4>
         <div class="list-group">
             @{
                 var topUsers = ViewBag.TopUsers as List<QL_BLOG.Models.ViewModels.TopUserViewModel>;
             }
-            @if (topUsers != null)
+            @if (topUsers != null && topUsers.Any())
             {
                 foreach (var user in topUsers)
                 {
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a asp-controller="Account" 
+                       asp-action="UserProfile" 
+                       asp-route-id="@user.Id_User"
+                       class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">@user.Username</h5>
-                            <small>@user.Create_At.ToString("dd/MM/yyyy")</small>
+                            <h6 class="mb-1">@user.Username</h6>
+                            <small>@user.PostCount bài viết</small>
                         </div>
-                        <p class="mb-1">Số bài viết: @user.PostCount</p>
                     </a>
                 }
             }
         </div>
     </div>
-    
+
     <div class="container p-3 rounded">
         <h4 class="text-center mt-3">Bài viết ngẫu nhiên</h4>
         <div class="rounded mt-2">
@@ -160,7 +129,7 @@
             @if (randomPost != null)
             {
                 <div class="card mb-3">
-                    <a asp-controller="Home" asp-action="Details" asp-route-id="@randomPost.Id_Post" 
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@randomPost.Id_Post" 
                        class="text-decoration-none text-dark">
                         @if (!string.IsNullOrEmpty(randomPost.Image_Posted))
                         {

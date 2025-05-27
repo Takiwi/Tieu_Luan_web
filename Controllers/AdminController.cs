@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QL_BLOG.Data;
-using QL_BLOG.Models; // Thêm dòng này để sử dụng PostViewModel
+using QL_BLOG.Models; 
 
 namespace QL_BLOG.Controllers
 {
@@ -36,55 +36,6 @@ namespace QL_BLOG.Controllers
 
             ViewBag.Posts = posts;
             return View(users);
-        }
-
-        [HttpPost]
-        public IActionResult DeletePost(int id)
-        {
-            var post = _context.Posts.FirstOrDefault(p => p.Id_Post == id);
-            if (post == null)
-            {
-                TempData["Error"] = "Bài viết không tồn tại.";
-                return RedirectToAction("Index", "Home");
-            }
-
-            var currentUserId = HttpContext.Session.GetInt32("UserId");
-            var isAdmin = HttpContext.Session.GetString("IsAdmin") == "true";
-
-            // Kiểm tra quyền
-            if (currentUserId != post.Id_User && !isAdmin)
-            {
-                TempData["Error"] = "Bạn không có quyền xóa bài viết này.";
-                return RedirectToAction("Index", "Home");
-            }
-
-            _context.Posts.Remove(post);
-            _context.SaveChanges();
-
-            TempData["Message"] = "Xóa bài viết thành công.";
-            return RedirectToAction("Index", "Home");
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var post = _context.Posts.FirstOrDefault(p => p.Id_Post == id);
-            if (post == null)
-            {
-                TempData["Error"] = "Bài viết không tồn tại.";
-                return RedirectToAction("Index", "Home");
-            }
-
-            // Chuyển đổi từ Post sang PostViewModel
-            var postViewModel = new PostViewModel
-            {
-                Id_Post = post.Id_Post,
-                Topic = post.Topic,
-                Content = post.Content,
-                Image_Posted = post.Image_Posted,
-                Id_User = post.Id_User
-            };
-
-            return View(postViewModel);
         }
 
         [HttpGet]

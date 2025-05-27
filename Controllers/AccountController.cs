@@ -167,5 +167,26 @@ namespace QL_BLOG.Controllers
             }
             return View(model);
         }
+
+        public IActionResult UserProfile(int id)
+        {
+            var user = _context.Accounts.FirstOrDefault(u => u.Id_User == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userPosts = _context.Posts
+                .Include(p => p.Category)
+                .Where(p => p.Id_User == id)
+                .OrderByDescending(p => p.Create_At)
+                .ToList();
+
+            ViewBag.UserPosts = userPosts;
+            ViewBag.UserId = id;
+            ViewBag.UserInfo = user;
+
+            return View();
+        }
     }
 }

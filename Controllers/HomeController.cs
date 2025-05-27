@@ -31,30 +31,6 @@ namespace QL_BLOG.Controllers
             return View(posts);
         }
 
-        // Chi tiết bài viết
-        public IActionResult Details(int id)
-        {
-            var post = _context.Posts
-                .Where(p => p.Id_Post == id)
-                .Select(p => new
-                {
-                    p.Id_Post,
-                    p.Topic,
-                    p.Content,
-                    p.Image_Posted,
-                    p.Create_At,
-                    Account = _context.Accounts.FirstOrDefault(a => a.Id_User == p.Id_User)
-                })
-                .FirstOrDefault();
-
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return View(post);
-        }
-
         // Tìm kiếm bài viết
         public IActionResult Search(string searchTerm)
         {
@@ -93,7 +69,7 @@ namespace QL_BLOG.Controllers
         {
             var topUsers = _context.Posts
                 .GroupBy(p => p.Id_User)
-                .Select(g => new 
+                .Select(g => new
                 {
                     UserId = g.Key,
                     PostCount = g.Count()
@@ -105,6 +81,7 @@ namespace QL_BLOG.Controllers
                       u => u.Id_User,
                       (g, u) => new TopUserViewModel
                       {
+                          Id_User = u.Id_User,  
                           Username = u.Username,
                           PostCount = g.PostCount,
                           Create_At = u.Create_At
