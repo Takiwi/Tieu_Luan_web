@@ -12,7 +12,7 @@ using QL_BLOG.Data;
 namespace QL_BLOG.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20250508001252_InitialCreate")]
+    [Migration("20250527113905_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -133,7 +133,6 @@ namespace QL_BLOG.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Image_Posted")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte>("States")
@@ -141,8 +140,7 @@ namespace QL_BLOG.Migrations
 
                     b.Property<string>("Topic")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("View_Number")
                         .HasColumnType("int");
@@ -178,7 +176,7 @@ namespace QL_BLOG.Migrations
             modelBuilder.Entity("QL_BLOG.Data.Post", b =>
                 {
                     b.HasOne("QL_BLOG.Data.Category", "Category")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("Id_Category")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -192,6 +190,11 @@ namespace QL_BLOG.Migrations
                     b.Navigation("Account");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("QL_BLOG.Data.Category", b =>
+                {
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

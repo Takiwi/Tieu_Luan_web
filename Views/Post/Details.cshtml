@@ -9,7 +9,20 @@
 
 <div class="container mt-5">
     <h2 class="text-center text-break">@Model.Topic</h2>
-    <p class="text-muted text-center">Đăng bởi: @Model.Account.Username vào ngày @Model.Create_At.ToString("dd/MM/yyyy")</p>
+    <div class="d-flex justify-content-center align-items-center text-muted mb-3">
+        <span class="me-3">
+            <i class="fas fa-user"></i> @Model.Account.Username
+        </span>
+        <span class="me-3">
+            <i class="far fa-calendar"></i> @Model.Create_At.ToString("dd/MM/yyyy")
+        </span>
+        <span class="me-3">
+            <i class="fas fa-eye"></i> @Model.View_Number lượt xem
+        </span>
+        <span>
+            <i class="fa-solid fa-tag"></i> @Model.Category.Name_Category
+        </span>
+    </div>
     
     @if (!string.IsNullOrEmpty(Model.Image_Posted))
     {

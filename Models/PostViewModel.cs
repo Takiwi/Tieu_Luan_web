@@ -23,10 +23,13 @@ namespace QL_BLOG.Models
         public string? Username { get; set; } // Tên người dùng
 
         public DateTime Create_At { get; set; } // Ngày tạo bài viết
-    
+
         [Required(ErrorMessage = "Danh mục là bắt buộc.")]
         public int Id_Category { get; set; }
 
-        public byte States { get; set; } // Sửa từ int thành byte nếu States là TINYINT trong cơ sở dữ liệu
+        public byte States { get; set; }
+        
+        public int View_Number { get; set; } // Số lượt xem bài viết
+        public string? CategoryName { get; set; } // Tên danh mục bài viết
     }
 }

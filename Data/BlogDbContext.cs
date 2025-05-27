@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,7 +27,7 @@ namespace QL_BLOG.Data
             // Thiết lập mối quan hệ giữa Post và Category
             modelBuilder.Entity<Post>()
                 .HasOne(p => p.Category)
-                .WithMany()
+                .WithMany(c => c.Posts)    
                 .HasForeignKey(p => p.Id_Category)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -92,8 +93,9 @@ namespace QL_BLOG.Data
 
         public DateTime Create_At { get; set; }
 
-        public byte States { get; set; } // Sửa từ int thành byte nếu States là TINYINT trong cơ sở dữ liệu
+        public byte States { get; set; }
 
+        [DefaultValue(0)]  
         public int View_Number { get; set; }
 
         public Account Account { get; set; }

@@ -116,9 +116,6 @@ namespace QL_BLOG.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Post"));
 
-                    b.Property<int?>("CategoryId_Category")
-                        .HasColumnType("int");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -146,8 +143,6 @@ namespace QL_BLOG.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id_Post");
-
-                    b.HasIndex("CategoryId_Category");
 
                     b.HasIndex("Id_Category");
 
@@ -177,12 +172,8 @@ namespace QL_BLOG.Migrations
 
             modelBuilder.Entity("QL_BLOG.Data.Post", b =>
                 {
-                    b.HasOne("QL_BLOG.Data.Category", null)
-                        .WithMany("Posts")
-                        .HasForeignKey("CategoryId_Category");
-
                     b.HasOne("QL_BLOG.Data.Category", "Category")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("Id_Category")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

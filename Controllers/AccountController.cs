@@ -99,12 +99,6 @@ namespace QL_BLOG.Controllers
             return View(model);
         }
 
-        // GET: /Account/AccessDenied
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
-
         // Trang cá nhân
         public IActionResult Profile()
         {

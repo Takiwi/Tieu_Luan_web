@@ -18,13 +18,12 @@ namespace QL_BLOG.Controllers
         // Trang chủ
         public IActionResult Index()
         {
-            // Set up sidebar data
+            // Lấy dữ liệu cho sidebar trước
             SetupSidebarData();
 
-            // Lấy danh sách bài viết, bao gồm thông tin người dùng
             var posts = _context.Posts
-                .Include(p => p.Category)
-                .Include(p => p.Account) 
+                .Include(p => p.Category)  
+                .Include(p => p.Account)
                 .OrderByDescending(p => p.Create_At)
                 .ToList();
 
@@ -65,6 +64,40 @@ namespace QL_BLOG.Controllers
             return View("Index", posts);
         }
 
+        // Chi tiết bài viết
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var post = _context.Posts
+                    .Include(p => p.Account)
+                    .Include(p => p.Category)
+                    .FirstOrDefault(p => p.Id_Post == id);
+
+                if (post == null)
+                {
+                    return NotFound();
+                }
+
+                // Tăng lượt xem trực tiếp bằng SQL để tránh vấn đề concurrency
+                _context.Database.ExecuteSqlRaw(
+                    "UPDATE Posts SET View_Number = View_Number + 1 WHERE Id_Post = {0}", id);
+
+                // Reload lại post để lấy số lượt xem mới nhất
+                _context.Entry(post).Reload();
+
+                SetupSidebarData();
+                return View(post);
+            }
+            catch (Exception ex)
+            {
+                // Log error
+                Console.WriteLine($"Error updating view count: {ex.Message}");
+                return RedirectToAction("Index");
+            }
+        }
+
+        // Cập nhật phần lấy random post để include Category
         private void SetupSidebarData()
         {
             var topUsers = _context.Posts
@@ -90,8 +123,9 @@ namespace QL_BLOG.Controllers
 
             ViewBag.TopUsers = topUsers;
 
-            // Lấy 1 bài viết ngẫu nhiên cùng Username
+            // Thêm Include để lấy thông tin Category cho random post
             var randomPost = _context.Posts
+                .Include(p => p.Category)
                 .OrderBy(r => Guid.NewGuid())
                 .Join(_context.Accounts,
                       p => p.Id_User,
@@ -103,7 +137,8 @@ namespace QL_BLOG.Controllers
                           Content = p.Content,
                           Create_At = p.Create_At,
                           Username = a.Username,
-                          Image_Posted = p.Image_Posted 
+                          Image_Posted = p.Image_Posted,
+                          CategoryName = p.Category.Name_Category
                       })
                 .FirstOrDefault();
 
