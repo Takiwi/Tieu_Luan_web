@@ -14,30 +14,6 @@ namespace QL_BLOG.Controllers
             _context = context;
         }
 
-        // Trang quản lý
-        public IActionResult Index()
-        {
-            // Kiểm tra nếu không phải admin, chuyển hướng về trang đăng nhập
-            if (HttpContext.Session.GetInt32("UserId") == null || !_context.Accounts.Any(a => a.Id_User == HttpContext.Session.GetInt32("UserId") && a.IsAdmin))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            var users = _context.Accounts.ToList();
-            var posts = _context.Posts
-                .Select(p => new
-                {
-                    p.Id_Post,
-                    p.Topic,
-                    p.Create_At,
-                    Account = _context.Accounts.FirstOrDefault(a => a.Id_User == p.Id_User)
-                })
-                .ToList();
-
-            ViewBag.Posts = posts;
-            return View(users);
-        }
-
         [HttpGet]
         public IActionResult ManagePosts()
         {
