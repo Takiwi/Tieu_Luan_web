@@ -24,6 +24,7 @@
 
 <div class="container mt-5">
     <h2 class="text-center mb-3">Danh sách bài viết</h2>
+
     <div class="row">
         @{
             var currentUserId = HttpContextAccessor.HttpContext?.Session?.GetInt32("UserId");
@@ -99,6 +100,23 @@
 </div>
 
 @section Sidebar {
+    <!-- Add search bar -->
+    <div class="container p-3 rounded mt-5">
+        <h4 class="text-center mb-3">Tìm kiếm</h4>
+        <form asp-controller="Home" asp-action="Search" method="get">
+            <div class="input-group">
+                <input type="text" 
+                       name="searchTerm" 
+                       class="form-control" 
+                       placeholder="Tìm kiếm bài viết..." 
+                       value="@ViewBag.CurrentSearch">
+                <button class="btn btn-outline-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
     <div class="container p-3 rounded mt-3">
         <h4 class="text-center">Những cây viết nổi bật</h4>
         <div class="list-group">

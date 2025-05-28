@@ -162,6 +162,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\user_4\fbe66819-21be-491f-a29a-3f535f855588_13.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\user_5\06d3126c-d9f0-4f60-af75-092061a4de1c_girl_grass_city_213102_1920x1080.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>QL_BLOG</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/QL_BLOG</BasePath>
+      <RelativePath>images/user_5/06d3126c-d9f0-4f60-af75-092061a4de1c_girl_grass_city_213102_1920x1080.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>qqhteandnu</Fingerprint>
+      <Integrity>7hqX98dfVi7PCjUyW+Qrgx4Py/rpUWv+xWfi0tEIkj8=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\user_5\06d3126c-d9f0-4f60-af75-092061a4de1c_girl_grass_city_213102_1920x1080.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))">
       <SourceType>Package</SourceType>
       <SourceId>QL_BLOG</SourceId>

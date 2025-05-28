@@ -18,23 +18,6 @@ namespace QL_BLOG.Controllers
             _imageHelper = imageHelper;
         }
 
-        // GET: /Post/Create
-        [HttpGet]
-        public IActionResult Create()
-        {            
-            // Kiểm tra trạng thái đăng nhập
-            if (HttpContext.Session.GetInt32("UserId") == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            // Lấy danh sách danh mục từ cơ sở dữ liệu
-            var categories = _context.Categories.ToList();
-            ViewBag.Categories = categories;
-
-            return View();
-        }
-
         // POST: /Post/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -114,17 +97,6 @@ namespace QL_BLOG.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(PostViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
-
-                ViewBag.Categories = _context.Categories.ToList();
-                return View(model);
-            }
-            
             if (ModelState.IsValid)
             {
                 var post = _context.Posts.FirstOrDefault(p => p.Id_Post == model.Id_Post);
@@ -139,7 +111,7 @@ namespace QL_BLOG.Controllers
                 // Cập nhật dữ liệu từ ViewModel
                 post.Topic = model.Topic;
                 post.Content = model.Content;
-                post.Id_Category = model.Id_Category; // Cập nhật Id_Category
+                post.Id_Category = model.Id_Category;
 
                 // Nếu có ảnh mới thì cập nhật, không thì giữ nguyên ảnh cũ
                 if (model.Image != null)

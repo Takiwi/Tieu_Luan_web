@@ -108,6 +108,18 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Sqr7235HjZsk3VISLL2WAytD5\u002ByPL8z5CG03/YQcp0k="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2062256"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022Sqr7235HjZsk3VISLL2WAytD5\u002ByPL8z5CG03/YQcp0k=\u0022"},{"Name":"Last-Modified","Value":"Mon, 26 May 2025 18:29:24 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/QL_BLOG/images/user_5/06d3126c-d9f0-4f60-af75-092061a4de1c_girl_grass_city_213102_1920x1080.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\user_5\06d3126c-d9f0-4f60-af75-092061a4de1c_girl_grass_city_213102_1920x1080.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-7hqX98dfVi7PCjUyW\u002BQrgx4Py/rpUWv\u002BxWfi0tEIkj8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"207770"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00227hqX98dfVi7PCjUyW\u002BQrgx4Py/rpUWv\u002BxWfi0tEIkj8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 27 May 2025 12:15:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/QL_BLOG/images/user_5/06d3126c-d9f0-4f60-af75-092061a4de1c_girl_grass_city_213102_1920x1080.qqhteandnu.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\user_5\06d3126c-d9f0-4f60-af75-092061a4de1c_girl_grass_city_213102_1920x1080.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"qqhteandnu"},{"Name":"integrity","Value":"sha256-7hqX98dfVi7PCjUyW\u002BQrgx4Py/rpUWv\u002BxWfi0tEIkj8="},{"Name":"label","Value":"_content/QL_BLOG/images/user_5/06d3126c-d9f0-4f60-af75-092061a4de1c_girl_grass_city_213102_1920x1080.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"207770"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00227hqX98dfVi7PCjUyW\u002BQrgx4Py/rpUWv\u002BxWfi0tEIkj8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 27 May 2025 12:15:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/QL_BLOG/js/site.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
